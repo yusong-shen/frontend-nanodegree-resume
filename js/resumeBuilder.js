@@ -141,6 +141,26 @@ var education = {
             ]
 };
 
+education.display = function () {
+    'use strict';
+    var formattedHtml, edu;
+    if (education.schools.length > 0 ) {
+        // start the HTML
+        $("#education").append("<div id=\"education-foldable-content\"></div>");
+        for (edu in education.schools) {
+            if (education.schools.hasOwnProperty(edu)) {
+                $("#education-foldable-content").append(HTMLschoolStart);
+                formattedHtml = HTMLschoolName.replace("%data%", education.schools[edu].name);
+                $(".education-entry:last").append(HTMLschoolDates.replace("%data%", education.schools[edu].dates));
+                $(".education-entry:last").append(formattedHtml);
+                $(".education-entry:last").append(HTMLschoolLocation.replace("%data%", education.schools[edu].location));
+                $(".education-entry:last").append(HTMLschoolDegree.replace("%data%", education.schools[edu].degree));
+                $(".education-entry:last").append(HTMLschoolMajor.replace("%data%", education.schools[edu].major));
+            }
+        }
+    }
+};
+
 
 /*
 projects contains an array of projects. Each project object in projects should 
@@ -196,5 +216,8 @@ projects.display = function () {
 /////////// main /////////////////////////////////////
 work.display();
 bio.display();
+education.display();
 projects.display();
+$("#mapDiv").append(googleMap);
+
 
