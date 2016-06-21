@@ -174,8 +174,27 @@ var projects = {
         ]
 };
 
+// create a function as part of the projects objects
+// encapsulation
+projects.display = function () {
+    'use strict';
+    var proj;
+    $("#projects").append("<div id=\"projects-foldable-content\"></div>");
+    for (proj in projects.projects) {
+        if (projects.projects.hasOwnProperty(proj)) {
+            $("#projects-foldable-content").append(HTMLprojectStart);
+            $(".project-entry:last").append(HTMLprojectTitle.replace("%data%", "<a href=\""+ projects.projects[proj].link + "\" target=\"_bkank\">" + projects.projects[proj].title + "</a>"));
+            $(".project-entry:last").append(HTMLprojectDates.replace("%data%", projects.projects[proj].dates));
+            $(".project-entry:last").append(HTMLprojectDescription.replace("%data%", projects.projects[proj].description));
+            if (projects.projects[proj].images.length > 0) {
+                $(".project-entry:last").append(HTMLprojectImage.replace("%data%", projects.projects[proj].images[0]));
+            }
+        }
+    }
+};
 
 /////////// main /////////////////////////////////////
 work.display();
 bio.display();
+projects.display();
 
