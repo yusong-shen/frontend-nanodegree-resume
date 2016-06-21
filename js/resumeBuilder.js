@@ -22,6 +22,18 @@ var work = {
 };
 
 
+for (job in work.jobs) {
+	$("#workExperience").append(HTMLworkStart);
+
+	var formattedEmployer = HTMLworkEmployer.replace("%data%", work.jobs[job].employer);
+	var formattedTitle = HTMLworkTitle.replace("%data%", work.jobs[job].title);
+	var formattedEmployerTitle = formattedEmployer + formattedTitle
+
+	$(".work-entry:last").append(
+		formattedEmployerTitle)
+
+}
+
 /*
 bio contains a name, role, welcomeMessage, contacts object and skills array. 
 The contacts object should contain (but doesn't have to) a mobile number, 
@@ -43,6 +55,44 @@ var bio = {
     "bioPic": "images/fry.jpg"
 };
 
+
+bio.display = function () {
+    'use strict';
+    var formattedName = HTMLheaderName.replace("%data%", bio.name),
+        formattedRole = HTMLheaderRole.replace("%data%", bio.role),
+        f_photo = HTMLbioPic.replace("%data%", bio.bioPic),
+        github = HTMLgithub.replace("%data%", "<a class=\"contacts-link\" href=\"" + bio.contacts.githublink + "\" target=\"_blank\">" + bio.contacts.github + "</a>"),
+        f_email = HTMLemail.replace("%data%", "<a class=\"contacts-link\" href=\"mailto:" + bio.contacts.email + "\">" + bio.contacts.email + "</a>"),
+        f_location = HTMLlocation.replace("%data%", bio.contacts.location),
+        // f_linkedin = HTMLlinkedin.replace("%data%", "<a class=\"contacts-link\" href=\"" + bio.contacts.linkedin + "\" target=\"_blank\">" + bio.contacts.linkedin + "</a>"),
+        formattedSkill,
+        skill,
+        HTMLContacts;
+
+    // Display stuff please
+    $("#header").append(formattedName);
+    $("#header").append(formattedRole);
+    // contacts
+    $("#header").append(f_photo);
+    HTMLContacts = '<dl id="topContacts"></dl>';
+    $("#header").append(HTMLContacts);
+    $("#topContacts").append(f_location);
+    $("#topContacts").append(github);
+    // $("#topContacts").append(f_linkedin);
+    $("#topContacts").append(f_email);
+
+    // $("#header").append(f_welcome_msg);
+    // skills
+    if (bio.skills.length > 0) {
+        $("#topContacts").append(HTMLskillsStart);
+        for (skill in bio.skills) {
+            if (bio.skills.hasOwnProperty(skill)) {
+                formattedSkill = HTMLskills.replace("%data%", bio.skills[skill]);
+                $("#skills").append(formattedSkill);
+            }
+        }
+    }
+};
 
 /*
 education contains an array of schools. Each school object in schools contains a name, location, degree, majors array, dates attended and a url for the school's website. education also contains an onlineCourses array. Each onlineCourse object in onlineCourses should contain a title, school, dates attended and a url for the course.
@@ -109,3 +159,8 @@ var projects = {
             }
         ]
 };
+
+
+/////////// main /////////////////////////////////////
+bio.display();
+
